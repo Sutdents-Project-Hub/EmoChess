@@ -1,4 +1,6 @@
-# EmoChess Backend - Coolify 部署模板
+# EmoChess Backend - 歷史 Coolify Compose 模板
+# 現行正式為 backend/Dockerfile 的獨立 API 與 PostgreSQL 18.6 resource。
+# 不得用本模板重建正式資料庫或接上正式資料卷；維護依 maintenance.md。
 # ─────────────────────────────────────────
 # 在 Coolify 上使用步驟：
 # 1. 建立新的 Docker Compose 服務

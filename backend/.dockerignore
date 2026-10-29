@@ -7,3 +7,9 @@ dist
 npm-debug.log*
 Dockerfile
 docker-compose*.yml
+tests
+.git
+*.pem
+*.key
+*.p12
+*.pfx

@@ -6,7 +6,7 @@ Node.js + Express + TypeScript 的 API 服務，使用 PostgreSQL 與 Prisma 儲
 
 ## 使用技術
 
-- Node.js（Dockerfile 使用 `node:20-alpine`）
+- Node.js 24 LTS（Dockerfile 固定 24.22.1 安全版與 Alpine 3.24 digest）
 - Express 5 + TypeScript
 - PostgreSQL, Prisma
 - JWT access token + refresh token
@@ -139,7 +139,13 @@ npm run start
 
 ## 部署細節
 
-### Coolify（Docker Compose）
+### 現行正式 Coolify（獨立 API 與 PostgreSQL）
+
+正式 `emochess-api` 使用 repository 的 `backend/` base directory 與自有 `Dockerfile`，port `3000`；PostgreSQL 18.6 是獨立 resource。API 啟動保留 `prisma migrate deploy`，使用既有資料庫與環境變數。
+
+2026-10-29 安全維護、資料保全、版本與本機 PG 映像操作限制，見 [維護說明](maintenance.md)。不要使用下方歷史 Compose 模板重建正式資料庫或接上正式資料卷。
+
+### 歷史 Docker Compose 模板
 
 使用 `docker-compose.coolify.yml` 部署，需提供的環境變數以檔案內 `${...}` 為準（也可對照 `.env.example`）：
 
@@ -158,6 +164,21 @@ npm run start
 - AI_MODEL（可選）
 
 容器啟動時會先執行 `prisma migrate deploy` 再啟動 API；健康檢查端點為 `/api/health`（含 DB 狀態）。
+
+### 安全維護檢查
+
+使用 Node.js 24，依序執行：
+
+```bash
+npm ci
+npm run db:generate
+npm run typecheck
+npm run build
+npm test
+npm audit
+```
+
+測試使用合成環境與 loopback HTTP，不連正式資料庫、不呼叫真 AI。正式部署另驗當項備份的 VPS 隔離還原、原生 migration、資料保持、匿名權限拒絕與正式 HTTPS。
 
 ### 健康檢查 / 文件
 

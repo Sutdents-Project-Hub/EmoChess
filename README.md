@@ -11,7 +11,7 @@ EmoChess 是一個以西洋棋為媒介的情緒陪伴與學習專案，包含�
 - Flutter App：遊戲介面、情緒記錄、對局分析與互動式陪伴對話
 - Backend API：帳號認證、對局與情緒資料儲存（PostgreSQL + Prisma）
 
-本專案採用 monorepo 結構，前後端分離。後端可用 Docker Compose 本地啟動，也可用 Coolify 以 Docker Compose 部署。
+本專案採用 monorepo 結構，前後端分離。後端可用 Docker Compose 本地啟動；現行 Coolify 正式環境使用 `backend/Dockerfile` 的獨立 API 與獨立 PostgreSQL resource。
 
 ## 功能列表
 
@@ -113,7 +113,7 @@ AI 採「後端代呼叫」模式：AI 金鑰放在後端環境變數，App 不�
 
 ## Coolify 部署教學
 
-後端部署建議使用 `backend/docker-compose.coolify.yml`。
+現行正式 API 的 base directory 是 `backend/`、Dockerfile 是該 component 自有 `Dockerfile`、port `3000`，PostgreSQL 18.6 由獨立 resource 管理。`backend/docker-compose.coolify.yml` 是歷史模板，不用來重建現行正式資料庫。安全維護與本機 PG 映像操作限制見 [後端維護說明](backend/maintenance.md)。
 
 - 部署時需提供的關鍵環境變數：
   - `POSTGRES_DB`、`POSTGRES_USER`、`POSTGRES_PASSWORD`

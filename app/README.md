@@ -1,5 +1,15 @@
 # EmoChess App
 
+## 2026-10-29 發佈工具鏈安全維護
+
+保留 Ruby 3.3 家族，`.ruby-version` 與 Gemfile 同步至 3.3.13，Fastlane 更新至 2.241.2；沿上游支援範圍修補 concurrent-ruby、Excon、Faraday、JSON、JWT 與 rubyzip，Gemfile.lock 保留 checksum 與原平台集合。Ruby 3.3.13 含官方安全修補；工作站應使用符合版本檔的獨立 Ruby 環境。
+
+來源：[Ruby 3.3.13 官方公告](https://www.ruby-lang.org/en/news/2026/10/23/ruby-3-3-13-released/)、[Fastlane 官方版本紀錄](https://github.com/fastlane/fastlane/releases)。
+
+隔離 Linux Ruby 3.3.13 下，以 Bundler 4.0.9 的 frozen lock、停用網路與更新／使用量檢查，驗過 Fastlane 版本、CocoaPods 及上述依賴載入、JWT round-trip；本次 Pub 與 Gem lock 的 OSV 查詢無命中。這些結果不等於已在 Darwin 重建／簽署 App 或完成上架驗收。
+
+Flutter 程式、App 版本、Dart／Pods lock、Bundle ID、簽署與發佈 lanes 保留；沒有執行 App Store／Play Store 發布、登入、金鑰輪替或真 AI 呼叫。正式 API 安全更新另見 [後端維護](../backend/maintenance.md)。
+
 ## 模組簡介
 
 Flutter 應用程式，提供西洋棋對弈、情緒記錄、對局分析與互動式陪伴對話。後端 API 與資料庫由 `backend` 提供。
